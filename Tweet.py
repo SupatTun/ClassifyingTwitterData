@@ -17,7 +17,7 @@ import joblib
 from gensim.models import Word2Vec
 from tensorflow.keras.optimizers import Adam
 
-gettweet('สนใจ',200)
+gettweet('ชัชชาติ',200)
 
 # word strip Functions
 def flatten(t):
