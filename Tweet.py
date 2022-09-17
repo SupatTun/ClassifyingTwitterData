@@ -17,7 +17,7 @@ import joblib
 from gensim.models import Word2Vec
 from tensorflow.keras.optimizers import Adam
 
-gettweet('ชัชชาติ',200)
+gettweet('#โหนกระเเส',1500)
 
 # word strip Functions
 def flatten(t):
@@ -98,7 +98,7 @@ stopword_list = stopword.split(' ')
 #Making Wordcloud of Tweets
 text = [a for a in text if not a in stopword_list]
 a = ' '.join(text)
-cloude = np.array(Image.open( "tw.jpg"))
+cloude = np.array(Image.open( "tw2.jpg"))
 wordcloud = WordCloud(font_path='C:/Windows/Fonts/Angsana.ttc',regexp=r"[\u0E00-\u0E7Fa-zA-Z']+",stopwords= stopword,max_words=50
 ,collocations=False,background_color="white",mask = cloude).generate(a)
 plt.figure(figsize=(40,30))
