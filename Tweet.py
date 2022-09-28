@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn import linear_model,model_selection,metrics,naive_bayes
+from sklearn import model_selection,metrics,naive_bayes
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report,confusion_matrix
 from tensorflow.keras.models import Sequential
@@ -14,11 +14,10 @@ from tensorflow.keras.layers import Dense, Dropout, LSTM, Activation
 from gensim.models.keyedvectors import KeyedVectors
 import string
 import joblib
-from gensim.models import Word2Vec
 from tensorflow.keras.optimizers import Adam
 
 #
-gettweet('#รัฐประหาร',1000)
+gettweet('#พายุโนรู',1000)
 
 # Word Preprocessing Functions
 def flatten(t):
@@ -93,7 +92,7 @@ text = np.concatenate(text).flatten()
 
 # Import Thai stopword
 stopword = ' '.join(corpus.thai_stopwords())
-stopword += (' มหาชน เม ผม รัฐประหาร โหน ตกหนัก กรุงเทพ กทม ไทย สมเด็จ ฝนตก เอลิซาเบธ ควีน ประชุม ยกเลิก สภา ฝน น้ํา ชัชชาติ น้ำ นํ้า นำ้ บิ๊ก ผลิต น้ำท่วม ท่วม')
+stopword += (' ฟ้า มหาชน เม ผม รัฐประหาร โหน ตกหนัก กรุงเทพ กทม ไทย สมเด็จ ฝนตก เอลิซาเบธ ควีน ประชุม ยกเลิก สภา ฝน น้ํา ชัชชาติ น้ำ นํ้า นำ้ บิ๊ก ผลิต น้ำท่วม ท่วม')
 stopword_list = stopword.split(' ')
 
 #Making Wordcloud of Tweets
@@ -165,13 +164,17 @@ TF_nb_model.fit(X=X_train_tf.values,y=Train['Flag'])
 Tf_test_pre = TF_nb_model.predict(test_tfid_vec)
 print(("TF-IDF Naive Bayse Model"))
 print(classification_report(Test['Flag'],Tf_test_pre))
-confusion_matrix(Test['Flag'], Tf_test_pre, normalize='pred')
+
+#Plot Confusion Matrix
+confusion_matrix = confusion_matrix(Test['Flag'], Tf_test_pre, normalize='pred')
+cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+cm_display.plot()
+plt.show()
 
 #Save Model
 #joblib.dump(TF_nb_model, "TF_nb_model.pkl") 
 #clf2 = joblib.load("TF_nb_model.pkl")
     
-
 #Import Fastvec
 fastvec = KeyedVectors.load_word2vec_format("cc.th.300.vec")
 word_to_index = fastvec.key_to_index
